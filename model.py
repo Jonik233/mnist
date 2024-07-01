@@ -1,14 +1,15 @@
 from torch import nn
 
 class Net(nn.Module):
-    def __init__(self, in_features1, out_features1, in_features2, out_features2, in_features3, out_features3):
+    def __init__(self):
         super().__init__()
-        self.linear_stack = nn.Sequential(nn.Linear(in_features1, out_features1), 
-                                          nn.Tanh(), 
-                                          nn.Linear(in_features2, out_features2), 
-                                          nn.Tanh(), 
-                                          nn.Linear(in_features3, out_features3), 
-                                          nn.Tanh()
+        self.linear_stack = nn.Sequential(nn.Conv1d(28, 28, 5, stride=1, padding=2), 
+                                          nn.ReLU(),
+                                          nn.Conv1d(28, 28, 5, stride=1, padding=2),
+                                          nn.ReLU(),
+                                          nn.Conv1d(28, 10, 5, stride=1, padding=2),
+                                          nn.ReLU(),
+                                          nn.Linear(28, 1)
                                           )
 
     def forward(self, x):
