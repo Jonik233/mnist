@@ -42,3 +42,8 @@ for e in range(epochs):
     print("-"*40)
     train_model(model, loss_fn, optimizer, train_loader, device)
     validate_model(model, loss_fn, val_loader, device)
+
+
+#Saving model's weights
+torch.save(model.state_dict(), "model.pth")
+print("Saved PyTorch Model State to model.pth")
