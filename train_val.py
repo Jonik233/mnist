@@ -26,7 +26,8 @@ def validate_model(model:nn.Module, loss_fn:nn.Module, loader:DataLoader, device
     model.eval()
     correct = 0
     losses = []
-    size = len(loader.dataset)
+    size = len(loader) * loader.batch_size
+
     for inputs, labels in loader:
         inputs = inputs.to(device=device, dtype=torch.float32)
         labels = labels.to(device=device, dtype=torch.long)
@@ -36,7 +37,7 @@ def validate_model(model:nn.Module, loss_fn:nn.Module, loader:DataLoader, device
         loss = loss_fn(outputs, labels).item()
 
         losses.append(loss)
-        correct += (preds == labels).sum()
+        correct += (preds == labels).sum().item()
     
     accuracy = (correct / size) * 100
     avg_loss = sum(losses) / len(losses)
